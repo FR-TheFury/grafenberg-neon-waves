@@ -12,7 +12,6 @@ interface Track {
 
 const AudioPlayer = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -99,22 +98,7 @@ const AudioPlayer = () => {
     setTracks(albumTracks);
   }, []);
 
-  // Show player on mouse movement
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    const handleMouseMove = () => {
-      setIsVisible(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setIsVisible(false), 3000);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(timeout);
-    };
-  }, []);
+  // Remove mouse movement visibility logic - player always visible
 
   // Audio setup
   useEffect(() => {
@@ -177,7 +161,7 @@ const AudioPlayer = () => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  if (!isVisible && !isExpanded) return null;
+  
 
   return (
     <>
