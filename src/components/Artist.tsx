@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Music2, Zap, Headphones, Star } from 'lucide-react';
-import artistPortrait from '@/assets/artist-portrait.jpg';
+import portrait from '@/assets/PP.png';
 
 const Artist = () => {
   const highlights = [
@@ -58,7 +58,7 @@ const Artist = () => {
             <div className="relative">
               <div className="glass rounded-2xl p-4 hover:glow-violet transition-all duration-500">
                 <img 
-                  src="/src/assets/PP.png"
+                  src={portrait}
                   alt="Ludovic Debay - Grafenberg" 
                   className="w-full h-auto rounded-xl object-cover"
                 />
