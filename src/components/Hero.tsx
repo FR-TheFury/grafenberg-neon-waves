@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Play, Music, Headphones } from 'lucide-react';
+import heroBackground from '@/assets/hero-background.jpg';
 
 const Hero = () => {
   const streamingPlatforms = [
@@ -48,7 +49,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{
-          backgroundImage: `url('/lovable-uploads/e6c2101b-201f-46ce-b91f-2741d3cf43ce.png')`,
+          backgroundImage: `url('/lovable-uploads/77d6fb03-a981-4bf2-8a3d-90b615e5797e.png')`,
         }}
       />
       
