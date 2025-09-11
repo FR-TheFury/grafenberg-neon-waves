@@ -71,11 +71,11 @@ const AlbumHighlights = () => {
             return (
               <div
                 key={feature.title}
-                className={`glass rounded-2xl p-8 group hover:${feature.glow} transition-all duration-500 transform hover:-translate-y-2 ${
-                  feature.color === 'neon-orange' ? 'hover:bg-neon-orange/5' :
-                  feature.color === 'neon-cyan' ? 'hover:bg-neon-cyan/5' :
-                  feature.color === 'neon-magenta' ? 'hover:bg-neon-magenta/5' :
-                  'hover:bg-neon-violet/5'
+                className={`glass rounded-2xl p-8 group transition-all duration-500 transform hover:-translate-y-2 ${
+                  feature.color === 'neon-orange' ? 'hover:bg-neon-orange/5 hover:glow-orange' :
+                  feature.color === 'neon-cyan' ? 'hover:bg-neon-cyan/5 hover:glow-cyan' :
+                  feature.color === 'neon-magenta' ? 'hover:bg-neon-magenta/5 hover:glow-magenta' :
+                  'hover:bg-neon-violet/5 hover:glow-violet'
                 }`}
                 style={{
                   animationDelay: `${index * 0.1}s`
