@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import TrackCarousel from '@/components/TrackCarousel';
 import AlbumHighlights from '@/components/AlbumHighlights';
 import Artist from '@/components/Artist';
 import Contact from '@/components/Contact';
@@ -10,6 +11,31 @@ import AudioPlayer from '@/components/AudioPlayer';
 import CursorTrail from '@/components/CursorTrail';
 
 const Index = () => {
+  const [currentTrack, setCurrentTrack] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioPlayerRef = useRef<{ 
+    setCurrentTrack: (index: number) => void;
+    setIsPlaying: (playing: boolean) => void;
+    pause: () => void;
+  } | null>(null);
+
+  const handleTrackPlay = (trackIndex: number) => {
+    setCurrentTrack(trackIndex);
+    setIsPlaying(true);
+    // Sync with main audio player
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setCurrentTrack(trackIndex);
+      audioPlayerRef.current.setIsPlaying(true);
+    }
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.pause();
+    }
+  };
+
   useEffect(() => {
     // Intersection Observer for scroll animations
     const observerOptions = {
@@ -44,6 +70,12 @@ const Index = () => {
       <AudioPlayer />
       <main>
         <Hero />
+        <TrackCarousel 
+          onTrackPlay={handleTrackPlay}
+          currentPlayingTrack={currentTrack}
+          isPlaying={isPlaying}
+          onPause={handlePause}
+        />
         <AlbumHighlights />
         <Artist />
         <Contact />
