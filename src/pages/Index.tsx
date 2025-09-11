@@ -5,6 +5,7 @@ import AlbumHighlights from '@/components/AlbumHighlights';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
+import AudioPlayer from '@/components/AudioPlayer';
 
 const Index = () => {
   useEffect(() => {
@@ -37,6 +38,7 @@ const Index = () => {
     <div className="min-h-screen bg-deep overflow-x-hidden">
       <ScrollProgress />
       <Navbar />
+      <AudioPlayer />
       <main>
         <Hero />
         <AlbumHighlights />
