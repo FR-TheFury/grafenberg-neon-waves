@@ -7,22 +7,30 @@ const Artist = () => {
     {
       icon: Music2,
       title: 'Electronic Producer',
-      description: 'Creating immersive synthwave soundscapes'
+      description: 'Creating immersive synthwave soundscapes',
+      color: "neon-orange",
+      glow: "glow-orange"
     },
     {
       icon: Zap,
       title: 'Sound Designer',
-      description: 'Crafting unique digital atmospheres'
+      description: 'Crafting unique digital atmospheres',
+      color: "neon-cyan",
+      glow: "glow-cyan"
     },
     {
       icon: Headphones,
       title: 'Mixing Engineer',
-      description: 'Precision audio engineering and mastering'
+      description: 'Precision audio engineering and mastering',
+      color: "neon-magenta",
+      glow: "glow-magenta"
     },
     {
       icon: Star,
       title: 'Creative Vision',
-      description: 'Blending retro aesthetics with modern production'
+      description: 'Blending retro aesthetics with modern production',
+      color: "neon-violet",
+      glow: "glow-violet"
     }
   ];
 
@@ -34,7 +42,7 @@ const Artist = () => {
       <div className="relative z-10 container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="font-orbitron font-bold text-4xl md:text-5xl lg:text-6xl mb-6 text-gradient-neon">
+          <h2 className="font-orbitron font-bold text-4xl md:text-5xl lg:text-6xl mb-6 text-gradient-cyber">
             The Artist
           </h2>
           <div className="waveform max-w-xs mx-auto mb-6" />
@@ -46,15 +54,15 @@ const Artist = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Artist Info */}
           <div className="space-y-8">
-            <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-8 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
-              <h3 className="font-orbitron font-bold text-3xl md:text-4xl mb-4 bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">
+            <div className="glass rounded-2xl p-8 hover:glow-cyan transition-all duration-500">
+              <h3 className="font-orbitron font-bold text-3xl md:text-4xl mb-4 text-gradient-neon">
                 Ludovic Debay
               </h3>
-              <p className="text-lg text-gold/80 mb-6 font-medium">
-                Alias <span className="text-gold">GRAFENBERG</span>
+              <p className="text-lg text-neon-cyan mb-6 font-medium">
+                Alias <span className="text-neon-orange">GRAFENBERG</span>
               </p>
               
-              <div className="space-y-4 text-gold/70 leading-relaxed">
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   Electronic music producer and sound designer specializing in synthwave and retrowave genres. 
                   With a passion for creating immersive sonic landscapes that blend nostalgic 80s aesthetics 
@@ -80,17 +88,20 @@ const Artist = () => {
               return (
                 <div
                   key={index}
-                  className="bg-bronze/15 backdrop-blur-xl border border-gold/20 rounded-xl p-6 hover:border-gold/40 hover:bg-bronze/25 transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--gold)/0.2)] group"
+                  className={`glass rounded-xl p-6 hover:${highlight.glow} transition-all duration-500 transform hover:-translate-y-2 group`}
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
                 >
                   <div className="flex items-center mb-4">
-                    <div className="p-3 bg-gold/20 rounded-lg border border-gold/30 group-hover:bg-gold/30 transition-colors duration-300">
-                      <IconComponent className="w-6 h-6 text-gold" />
+                    <div className={`p-3 bg-${highlight.color}/10 border border-${highlight.color}/30 rounded-lg group-hover:bg-${highlight.color}/20 transition-colors duration-300`}>
+                      <IconComponent className={`w-6 h-6 text-${highlight.color}`} />
                     </div>
                   </div>
-                  <h4 className="font-orbitron font-bold text-lg text-gold mb-2">
+                  <h4 className="font-orbitron font-bold text-lg text-foreground group-hover:text-white transition-colors duration-300 mb-2">
                     {highlight.title}
                   </h4>
-                  <p className="text-gold/60 text-sm leading-relaxed">
+                  <p className="text-muted-foreground group-hover:text-foreground/90 text-sm leading-relaxed transition-colors duration-300">
                     {highlight.description}
                   </p>
                 </div>
@@ -101,22 +112,21 @@ const Artist = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-16">
-          <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-8 shadow-[0_0_30px_hsl(var(--gold)/0.3)] inline-block">
-            <p className="text-gold/70 mb-6 text-lg">
+          <div className="glass rounded-2xl p-8 max-w-2xl mx-auto hover:glow-orange transition-all duration-500">
+            <h3 className="font-orbitron font-bold text-2xl mb-4 text-gradient-neon">
               Connect and follow the journey
+            </h3>
+            <p className="text-muted-foreground mb-6 text-lg">
+              Follow the creative process and discover new releases
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                variant="streaming"
-                size="lg"
-                className="bg-gradient-to-r from-gold to-amber hover:from-gold-light hover:to-gold border border-gold/30 text-bronze hover:shadow-[0_0_20px_hsl(var(--gold)/0.4)]"
-                asChild
+              <a
+                href="#contact"
+                className="glass px-6 py-3 rounded-xl border-neon-orange/30 text-neon-orange hover:bg-neon-orange/10 hover-glow-orange transition-all duration-300 font-semibold"
               >
-                <a href="#contact">
-                  <Music2 className="w-5 h-5" />
-                  <span>Follow on Platforms</span>
-                </a>
-              </Button>
+                <Music2 className="w-5 h-5 inline mr-2" />
+                Follow on Platforms
+              </a>
             </div>
           </div>
         </div>
