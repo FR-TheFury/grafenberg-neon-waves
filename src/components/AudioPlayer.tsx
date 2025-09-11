@@ -20,75 +20,76 @@ const AudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout>();
 
-  // Album tracks with real track names
+  // Album tracks with real track names (respect base path for GitHub Pages)
+  const base = import.meta.env.BASE_URL || '/';
   const albumTracks: Track[] = [
     {
       id: '1',
       name: 'Nazar Engine',
-      preview_url: '/audio/01 - Nazar Engine.mp3',
+      preview_url: `${base}audio/01 - Nazar Engine.mp3`,
       duration_ms: 0, // Will be updated when audio loads
       track_number: 1
     },
     {
       id: '2', 
       name: 'Pomegranate Static',
-      preview_url: '/audio/02 - Pomegranate Static.mp3',
+      preview_url: `${base}audio/02 - Pomegranate Static.mp3`,
       duration_ms: 0,
       track_number: 2
     },
     {
       id: '3',
       name: 'Order Eats The Sun',
-      preview_url: '/audio/03 - Order Eats The Sun.mp3',
+      preview_url: `${base}audio/03 - Order Eats The Sun.mp3`,
       duration_ms: 0,
       track_number: 3
     },
     {
       id: '4',
       name: 'Tape Ghost Mirage',
-      preview_url: '/audio/04 - Tape Ghost Mirage.mp3',
+      preview_url: `${base}audio/04 - Tape Ghost Mirage.mp3`,
       duration_ms: 0,
       track_number: 4
     },
     {
       id: '5',
       name: 'Black Salt',
-      preview_url: '/audio/05 - Black Salt.mp3',
+      preview_url: `${base}audio/05 - Black Salt.mp3`,
       duration_ms: 0,
       track_number: 5
     },
     {
       id: '6',
       name: 'Chrome killim',
-      preview_url: '/audio/06 - Chrome killim.mp3',
+      preview_url: `${base}audio/06 - Chrome killim.mp3`,
       duration_ms: 0,
       track_number: 6
     },
     {
       id: '7',
       name: 'Loom of Wires',
-      preview_url: '/audio/07 -  Loom of Wires.mp3',
+      preview_url: `${base}audio/07 -  Loom of Wires.mp3`,
       duration_ms: 0,
       track_number: 7
     },
     {
       id: '8',
       name: 'VHS Desert Prayer',
-      preview_url: '/audio/08 - VHS Desert Prayer.mp3',
+      preview_url: `${base}audio/08 - VHS Desert Prayer.mp3`,
       duration_ms: 0,
       track_number: 8
     },
     {
       id: '9',
       name: 'Motor Moon Communion',
-      preview_url: '/audio/09 - Motor Moon Communion.mp3',
+      preview_url: `${base}audio/09 - Motor Moon Communion.mp3`,
       duration_ms: 0,
       track_number: 9
     },
     {
       id: '10',
       name: 'Seraph on the Faultline',
-      preview_url: '/audio/10 - Seraph on the Faultline.mp3',
+      preview_url: `${base}audio/10 - Seraph on the Faultline.mp3`,
       duration_ms: 0,
       track_number: 10
     }
@@ -103,7 +104,10 @@ const AudioPlayer = () => {
       const audio = audioRef.current;
       if (audio && albumTracks[0]?.preview_url) {
         audio.src = albumTracks[0].preview_url;
-        audio.play().catch(console.error);
+        console.log('Autoplay attempt with URL:', audio.src);
+        audio.play().catch((err) => {
+          console.warn('Autoplay blocked or failed:', err);
+        });
       }
     };
 
@@ -158,14 +162,20 @@ const AudioPlayer = () => {
       nextTrack();
     };
 
+    const handleError = () => {
+      console.error('Audio error while loading/playing:', audio.src, audio.error);
+    };
+
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('error', handleError);
 
     return () => {
       audio.removeEventListener('timeupdate', updateProgress);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('error', handleError);
     };
   }, [currentTrack]);
 
@@ -176,11 +186,15 @@ const AudioPlayer = () => {
     if (isPlaying) {
       audio.pause();
       clearInterval(progressIntervalRef.current);
+      console.log('Paused playback');
     } else {
       const currentTrackData = tracks[currentTrack];
       if (currentTrackData?.preview_url) {
         audio.src = currentTrackData.preview_url;
-        audio.play().catch(console.error);
+        console.log('Play attempt with URL:', audio.src);
+        audio.play().catch((err) => {
+          console.warn('Play failed:', err);
+        });
       }
     }
     setIsPlaying(!isPlaying);
