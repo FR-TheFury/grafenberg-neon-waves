@@ -90,6 +90,34 @@
     border: 1px solid var(--glass-border);
   }
   
+  /* Animated border effects */
+  .glass-animated-border {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid transparent;
+  }
+  
+  .glass-animated-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+      hsl(var(--neon-cyan)), 
+      hsl(var(--neon-orange)), 
+      hsl(var(--neon-magenta)), 
+      hsl(var(--neon-violet)),
+      hsl(var(--neon-cyan))
+    );
+    background-size: 300% 300%;
+    border-radius: inherit;
+    z-index: -1;
+    animation: borderRotate 3s ease infinite;
+  }
+  
   /* Neon glow effects */
   .glow-orange {
     box-shadow: var(--glow-orange);
@@ -211,6 +239,33 @@
     }
   }
   
+  @keyframes borderRotate {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes borderPulse {
+    0%, 100% {
+      border-color: hsl(var(--neon-cyan) / 0.5);
+      box-shadow: 0 0 16px hsl(var(--neon-cyan) / 0.3);
+    }
+    33% {
+      border-color: hsl(var(--neon-orange) / 0.5);
+      box-shadow: 0 0 16px hsl(var(--neon-orange) / 0.3);
+    }
+    66% {
+      border-color: hsl(var(--neon-magenta) / 0.5);
+      box-shadow: 0 0 16px hsl(var(--neon-magenta) / 0.3);
+    }
+  }
+  
   /* Utility classes */
   .animate-pulse-glow {
     animation: pulseGlow 2s ease-in-out infinite;
@@ -226,6 +281,22 @@
   
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
+  }
+  
+  .animate-border-rotate {
+    background: linear-gradient(45deg, 
+      hsl(var(--neon-cyan)), 
+      hsl(var(--neon-orange)), 
+      hsl(var(--neon-magenta)), 
+      hsl(var(--neon-violet)),
+      hsl(var(--neon-cyan))
+    );
+    background-size: 300% 300%;
+    animation: borderRotate 3s ease infinite;
+  }
+  
+  .animate-border-pulse {
+    animation: borderPulse 2s ease-in-out infinite;
   }
   
   /* Hover effects */

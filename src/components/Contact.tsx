@@ -47,7 +47,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="glass rounded-2xl p-12">
+        <div className="glass-animated-border rounded-2xl p-12">
           <h3 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 text-gradient-cyber">
             Contact me on streaming platforms
           </h3>
