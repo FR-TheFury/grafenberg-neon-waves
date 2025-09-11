@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Music2, Zap, Headphones, Star } from 'lucide-react';
+import artistPortrait from '@/assets/artist-portrait.jpg';
 
 const Artist = () => {
   const highlights = [
@@ -52,8 +53,25 @@ const Artist = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Artist Image */}
+          <div className="order-2 lg:order-1">
+            <div className="relative">
+              <div className="glass rounded-2xl p-4 hover:glow-violet transition-all duration-500">
+                <img 
+                  src={artistPortrait} 
+                  alt="Ludovic Debay - Grafenberg" 
+                  className="w-full h-auto rounded-xl object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-deep/60 via-transparent to-transparent rounded-2xl pointer-events-none" />
+              </div>
+              {/* Floating elements */}
+              <div className="absolute -top-4 -right-4 w-8 h-8 bg-neon-cyan/20 rounded-full blur-sm animate-pulse" />
+              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-neon-orange/20 rounded-full blur-sm animate-pulse" style={{ animationDelay: '1s' }} />
+            </div>
+          </div>
+
           {/* Artist Info */}
-          <div className="space-y-8">
+          <div className="space-y-8 order-1 lg:order-2">
             <div className="glass rounded-2xl p-8 hover:glow-cyan transition-all duration-500">
               <h3 className="font-orbitron font-bold text-3xl md:text-4xl mb-4 text-gradient-neon">
                 Ludovic Debay
@@ -80,8 +98,13 @@ const Artist = () => {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Highlights Grid */}
+        {/* Highlights Grid */}
+        <div className="mt-16">
+          <h3 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 text-center text-gradient-cyber">
+            Expertise & Skills
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {highlights.map((highlight, index) => {
               const IconComponent = highlight.icon;
