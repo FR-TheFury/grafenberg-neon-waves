@@ -99,35 +99,45 @@ const AudioPlayer = () => {
   useEffect(() => {
     setTracks(albumTracks);
     
-    // Auto-play on page load
+    // Auto-play on page load with improved reliability
     const startAutoPlay = () => {
       setIsPlaying(true);
       const audio = audioRef.current;
       if (audio && albumTracks[0]?.preview_url) {
         audio.src = albumTracks[0].preview_url;
         console.log('Autoplay attempt with URL:', audio.src);
+        // Preload the audio first
+        audio.load();
         audio.play().catch((err) => {
           console.warn('Autoplay blocked or failed:', err);
+          setIsPlaying(false);
         });
       }
     };
 
-    // Auto-play on first mouse movement
-    const handleFirstMouseMove = () => {
+    // Auto-play on first user interaction
+    const handleFirstInteraction = () => {
       startAutoPlay();
-      document.removeEventListener('mousemove', handleFirstMouseMove);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
     };
 
-    // Try immediate autoplay, fallback to mouse movement
+    // Try immediate autoplay first
     const timeoutId = setTimeout(() => {
       startAutoPlay();
-    }, 1000);
+    }, 500);
 
-    document.addEventListener('mousemove', handleFirstMouseMove);
+    // Fallback to user interaction
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
 
     return () => {
       clearTimeout(timeoutId);
-      document.removeEventListener('mousemove', handleFirstMouseMove);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
     };
   }, []);
 
@@ -202,15 +212,35 @@ const AudioPlayer = () => {
   };
 
   const nextTrack = () => {
-    setCurrentTrack((prev) => (prev + 1) % tracks.length);
+    const newTrackIndex = (currentTrack + 1) % tracks.length;
+    setCurrentTrack(newTrackIndex);
     setProgress(0);
-    setIsPlaying(false);
+    setIsPlaying(true);
+    
+    // Auto-play next track
+    const audio = audioRef.current;
+    if (audio && tracks[newTrackIndex]?.preview_url) {
+      audio.src = tracks[newTrackIndex].preview_url;
+      audio.play().catch((err) => {
+        console.warn('Auto-play next track failed:', err);
+      });
+    }
   };
 
   const prevTrack = () => {
-    setCurrentTrack((prev) => (prev - 1 + tracks.length) % tracks.length);
+    const newTrackIndex = (currentTrack - 1 + tracks.length) % tracks.length;
+    setCurrentTrack(newTrackIndex);
     setProgress(0);
-    setIsPlaying(false);
+    setIsPlaying(true);
+    
+    // Auto-play previous track
+    const audio = audioRef.current;
+    if (audio && tracks[newTrackIndex]?.preview_url) {
+      audio.src = tracks[newTrackIndex].preview_url;
+      audio.play().catch((err) => {
+        console.warn('Auto-play previous track failed:', err);
+      });
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -330,8 +360,17 @@ const AudioPlayer = () => {
                 key={track.id}
                 onClick={() => {
                   setCurrentTrack(index);
-                  setIsPlaying(false);
+                  setIsPlaying(true);
                   setProgress(0);
+                  
+                  // Auto-play selected track
+                  const audio = audioRef.current;
+                  if (audio && track.preview_url) {
+                    audio.src = track.preview_url;
+                    audio.play().catch((err) => {
+                      console.warn('Auto-play selected track failed:', err);
+                    });
+                  }
                 }}
                 className={`w-full text-left p-2 rounded-lg transition-all duration-300 mb-1 ${
                   index === currentTrack 
