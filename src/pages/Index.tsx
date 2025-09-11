@@ -7,6 +7,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import AudioPlayer from '@/components/AudioPlayer';
+import CursorTrail from '@/components/CursorTrail';
 
 const Index = () => {
   useEffect(() => {
@@ -37,6 +38,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-deep overflow-x-hidden">
+      <CursorTrail />
       <ScrollProgress />
       <Navbar />
       <AudioPlayer />

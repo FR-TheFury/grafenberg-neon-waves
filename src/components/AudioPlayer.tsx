@@ -96,6 +96,34 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     setTracks(albumTracks);
+    
+    // Auto-play on page load
+    const startAutoPlay = () => {
+      setIsPlaying(true);
+      const audio = audioRef.current;
+      if (audio && albumTracks[0]?.preview_url) {
+        audio.src = albumTracks[0].preview_url;
+        audio.play().catch(console.error);
+      }
+    };
+
+    // Auto-play on first mouse movement
+    const handleFirstMouseMove = () => {
+      startAutoPlay();
+      document.removeEventListener('mousemove', handleFirstMouseMove);
+    };
+
+    // Try immediate autoplay, fallback to mouse movement
+    const timeoutId = setTimeout(() => {
+      startAutoPlay();
+    }, 1000);
+
+    document.addEventListener('mousemove', handleFirstMouseMove);
+
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener('mousemove', handleFirstMouseMove);
+    };
   }, []);
 
   // Remove mouse movement visibility logic - player always visible
