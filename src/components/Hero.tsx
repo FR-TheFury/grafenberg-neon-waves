@@ -81,8 +81,9 @@ const Hero = () => {
         <div className="mb-12 animate-slide-up" style={{ animationDelay: '0.4s' }}>
           <Button
             asChild
+            variant="default"
             size="lg"
-            className="glass bg-neon-orange/20 border-neon-orange text-neon-orange hover:bg-neon-orange hover:text-deep text-xl px-12 py-6 rounded-2xl font-bold transition-all duration-300 animate-pulse-glow"
+            className="text-xl"
           >
             <a
               href="https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ"

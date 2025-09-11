@@ -63,7 +63,8 @@ const Navbar = () => {
           {/* CTA Button */}
           <Button
             asChild
-            className="glass border-neon-orange/30 text-neon-orange hover:bg-neon-orange/10 hover:border-neon-orange hover-glow-orange font-semibold px-6"
+            variant="secondary"
+            size="sm"
           >
             <a
               href="https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ"
