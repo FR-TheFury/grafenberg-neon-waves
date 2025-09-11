@@ -82,18 +82,13 @@ const Artist = () => {
               
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Electronic music producer and sound designer specializing in synthwave and retrowave genres. 
-                  With a passion for creating immersive sonic landscapes that blend nostalgic 80s aesthetics 
-                  with contemporary production techniques.
+                  After deejaying from pumping techno to minimal underground, I started to collect hundreds of ep's from beloved artists who has deeply influenced me since twenty years. It was than a natural and organic step to start producing my own music.
                 </p>
                 <p>
-                  Drawing inspiration from cyberpunk culture, neon-lit cityscapes, and vintage synthesizers, 
-                  Grafenberg crafts each track to transport listeners into a world of digital dreams and 
-                  electric emotions.
+                  My first Ep on Traumwelten is a testimonial of my love for their work, my love for deep techno music and cheesy moogy's things.
                 </p>
                 <p>
-                  The latest album "No Saints, No Proof" represents a journey through synthetic soundscapes, 
-                  exploring themes of technology, nostalgia, and the human experience in a digital age.
+                  I found with this label the ideal creative framework to share my world, my dreams & feelings !
                 </p>
               </div>
             </div>
