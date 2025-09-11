@@ -30,6 +30,8 @@ export default {
         surface: "hsl(var(--surface))",
         
         // Base tokens
+        border: "hsl(var(--border))",
+        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         muted: {
