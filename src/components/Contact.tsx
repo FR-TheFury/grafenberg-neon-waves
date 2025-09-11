@@ -47,8 +47,8 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="glass-animated-border rounded-2xl p-12">
-          <h3 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 text-gradient-cyber">
+        <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-12 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
+          <h3 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">
             Contact me on streaming platforms
           </h3>
           
@@ -77,8 +77,8 @@ const Contact = () => {
             })}
           </div>
           
-          <div className="pt-8 border-t border-white/10">
-            <p className="text-muted-foreground">
+          <div className="pt-8 border-t border-gold/20">
+            <p className="text-gold/60">
               Follow and message me directly on your preferred platform
             </p>
           </div>
