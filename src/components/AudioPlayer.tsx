@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack, Volume2, ChevronLeft, ChevronRight } from 'lucide-react';
+import albumArtwork from '@/assets/Album_artwork.png';
 
 interface Track {
   id: string;
@@ -239,17 +240,29 @@ const AudioPlayer = () => {
 
         {/* Player */}
         <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-6 w-80 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
-          {/* Track Info */}
-          <div className="mb-4">
-            <h3 className="font-orbitron font-bold text-lg bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-1">
-              GRAFENBERG
-            </h3>
-            <p className="text-gold font-medium truncate">
-              {tracks[currentTrack]?.name || 'No Saints, No Proof'}
-            </p>
-            <p className="text-gold/60 text-sm">
-              Track {(currentTrack + 1).toString().padStart(2, '0')} of {tracks.length}
-            </p>
+          {/* Album Art & Track Info */}
+          <div className="mb-4 flex gap-4">
+            {/* Album Artwork */}
+            <div className="w-16 h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0">
+              <img 
+                src={albumArtwork} 
+                alt="No Saints, No Proof Album Cover" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Track Info */}
+            <div className="flex-1 min-w-0">
+              <h3 className="font-orbitron font-bold text-lg bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-1">
+                GRAFENBERG
+              </h3>
+              <p className="text-gold font-medium truncate">
+                {tracks[currentTrack]?.name || 'No Saints, No Proof'}
+              </p>
+              <p className="text-gold/60 text-sm">
+                Track {(currentTrack + 1).toString().padStart(2, '0')} of {tracks.length}
+              </p>
+            </div>
           </div>
 
           {/* Progress Bar */}
@@ -332,12 +345,6 @@ const AudioPlayer = () => {
                 </div>
               </button>
             ))}
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-gold/20">
-            <p className="text-xs text-gold/40 text-center">
-              Full album tracks • MP3 files loaded
-            </p>
           </div>
         </div>
       </div>

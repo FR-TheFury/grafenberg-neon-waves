@@ -54,7 +54,7 @@ const AlbumHighlights = () => {
       <div className="relative z-10 container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="font-orbitron font-bold text-4xl md:text-5xl lg:text-6xl mb-6 text-gradient-cyber">
+          <h2 className="font-orbitron font-bold text-4xl md:text-5xl lg:text-6xl mb-6 text-gradient-cyber leading-tight">
             Album Highlights
           </h2>
           <div className="waveform max-w-md mx-auto mb-6" />
@@ -71,7 +71,7 @@ const AlbumHighlights = () => {
             return (
               <div
                 key={feature.title}
-                className={`glass rounded-2xl p-8 group hover:${feature.glow} transition-all duration-500 transform hover:-translate-y-2`}
+                className={`glass rounded-2xl p-8 group hover:${feature.glow} transition-all duration-500 transform hover:-translate-y-2 hover:bg-${feature.color}/5`}
                 style={{
                   animationDelay: `${index * 0.1}s`
                 }}
