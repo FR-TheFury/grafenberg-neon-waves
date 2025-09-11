@@ -20,76 +20,76 @@ const AudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout>();
 
-  // Album tracks - ready for local files (just replace the file paths)
+  // Album tracks with real track names
   const albumTracks: Track[] = [
     {
       id: '1',
-      name: 'No Saints, No Proof',
-      preview_url: '/audio/01-no-saints-no-proof.mp3', // Local file path
-      duration_ms: 210000,
+      name: 'Nazar Engine',
+      preview_url: '/audio/01-nazar-engine.wav',
+      duration_ms: 0, // Will be updated when audio loads
       track_number: 1
     },
     {
       id: '2', 
-      name: 'Digital Dreams',
-      preview_url: '/audio/02-digital-dreams.mp3', // Local file path
-      duration_ms: 195000,
+      name: 'Pomegranate Static',
+      preview_url: '/audio/02-pomegranate-static.wav',
+      duration_ms: 0,
       track_number: 2
     },
     {
       id: '3',
-      name: 'Neon Nights',
-      preview_url: '/audio/03-neon-nights.mp3', // Local file path
-      duration_ms: 230000,
+      name: 'Order Eats The Sun',
+      preview_url: '/audio/03-order-eats-the-sun.wav',
+      duration_ms: 0,
       track_number: 3
     },
     {
       id: '4',
-      name: 'Cyber Soul',
-      preview_url: '/audio/04-cyber-soul.mp3', // Local file path
-      duration_ms: 180000,
+      name: 'Tape Ghost Mirage',
+      preview_url: '/audio/04-tape-ghost-mirage.wav',
+      duration_ms: 0,
       track_number: 4
     },
     {
       id: '5',
-      name: 'Electric Pulse',
-      preview_url: '/audio/05-electric-pulse.mp3', // Local file path
-      duration_ms: 245000,
+      name: 'Black Salt',
+      preview_url: '/audio/05-black-salt.wav',
+      duration_ms: 0,
       track_number: 5
     },
     {
       id: '6',
-      name: 'Synthetic Love',
-      preview_url: '/audio/06-synthetic-love.mp3', // Local file path
-      duration_ms: 201000,
+      name: 'Chrome killim',
+      preview_url: '/audio/06-chrome-killim.wav',
+      duration_ms: 0,
       track_number: 6
     },
     {
       id: '7',
-      name: 'Chrome Hearts',
-      preview_url: '/audio/07-chrome-hearts.mp3', // Local file path
-      duration_ms: 188000,
+      name: 'Loom of Wires',
+      preview_url: '/audio/07-loom-of-wires.wav',
+      duration_ms: 0,
       track_number: 7
     },
     {
       id: '8',
-      name: 'Midnight Drive',
-      preview_url: '/audio/08-midnight-drive.mp3', // Local file path
-      duration_ms: 267000,
+      name: 'VHS Desert Prayer',
+      preview_url: '/audio/08-vhs-desert-prayer.wav',
+      duration_ms: 0,
       track_number: 8
     },
     {
       id: '9',
-      name: 'Quantum Dreams',
-      preview_url: '/audio/09-quantum-dreams.mp3', // Local file path
-      duration_ms: 223000,
+      name: 'Motor Moon Communion',
+      preview_url: '/audio/09-motor-moon-communion.wav',
+      duration_ms: 0,
       track_number: 9
     },
     {
       id: '10',
-      name: 'Future Memories',
-      preview_url: '/audio/10-future-memories.mp3', // Local file path
-      duration_ms: 278000,
+      name: 'Seraph on the Faultline',
+      preview_url: '/audio/10-seraph-on-the-faultline.wav',
+      duration_ms: 0,
       track_number: 10
     }
   ];
@@ -109,7 +109,20 @@ const AudioPlayer = () => {
 
     const updateProgress = () => {
       if (audio.duration) {
-        setProgress((audio.currentTime / 30) * 100); // 30 seconds max for previews
+        setProgress((audio.currentTime / audio.duration) * 100);
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      if (audio.duration) {
+        // Update the duration in tracks state when audio loads
+        setTracks(prevTracks => 
+          prevTracks.map((track, index) => 
+            index === currentTrack 
+              ? { ...track, duration_ms: audio.duration * 1000 }
+              : track
+          )
+        );
       }
     };
 
@@ -118,10 +131,12 @@ const AudioPlayer = () => {
     };
 
     audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('ended', handleEnded);
 
     return () => {
       audio.removeEventListener('timeupdate', updateProgress);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
     };
   }, [currentTrack]);
@@ -191,7 +206,7 @@ const AudioPlayer = () => {
               {tracks[currentTrack]?.name || 'No Saints, No Proof'}
             </p>
             <p className="text-gold/60 text-sm">
-              Track {currentTrack + 1} of {tracks.length}
+              Track {(currentTrack + 1).toString().padStart(2, '0')} of {tracks.length}
             </p>
           </div>
 
@@ -205,7 +220,7 @@ const AudioPlayer = () => {
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <span>{formatTime(tracks[currentTrack]?.duration_ms / 1000 || 210)}</span>
+              <span>{formatTime(tracks[currentTrack]?.duration_ms / 1000 || 0)}</span>
             </div>
           </div>
 
@@ -279,7 +294,7 @@ const AudioPlayer = () => {
 
           <div className="mt-4 pt-3 border-t border-gold/20">
             <p className="text-xs text-gold/40 text-center">
-              Full album tracks • Place MP3 files in /public/audio/
+              Full album tracks • Place WAV files in /public/audio/
             </p>
           </div>
         </div>
