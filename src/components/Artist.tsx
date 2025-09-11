@@ -106,7 +106,7 @@ const Artist = () => {
               return (
                 <div
                   key={index}
-                  className={`glass rounded-xl p-6 hover:${highlight.glow} transition-all duration-500 transform hover:-translate-y-2 group`}
+                  className={`glass rounded-xl p-6 hover:${highlight.glow} transition-all duration-500 transform hover:-translate-y-2 group hover:bg-${highlight.color}/5`}
                   style={{
                     animationDelay: `${index * 0.1}s`
                   }}
