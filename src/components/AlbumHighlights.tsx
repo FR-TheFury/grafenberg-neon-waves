@@ -71,7 +71,12 @@ const AlbumHighlights = () => {
             return (
               <div
                 key={feature.title}
-                className={`glass rounded-2xl p-8 group hover:${feature.glow} hover:bg-neon-magenta/5 transition-all duration-500 transform hover:-translate-y-2`}
+                className={`glass rounded-2xl p-8 group hover:${feature.glow} transition-all duration-500 transform hover:-translate-y-2 ${
+                  feature.color === 'neon-orange' ? 'hover:bg-neon-orange/5' :
+                  feature.color === 'neon-cyan' ? 'hover:bg-neon-cyan/5' :
+                  feature.color === 'neon-magenta' ? 'hover:bg-neon-magenta/5' :
+                  'hover:bg-neon-violet/5'
+                }`}
                 style={{
                   animationDelay: `${index * 0.1}s`
                 }}
