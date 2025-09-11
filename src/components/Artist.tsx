@@ -58,7 +58,7 @@ const Artist = () => {
             <div className="relative">
               <div className="glass rounded-2xl p-4 hover:glow-violet transition-all duration-500">
                 <img 
-                  src={artistPortrait} 
+                  src="/lovable-uploads/21df29ae-e107-40e1-812b-ab509fc0db02.png" 
                   alt="Ludovic Debay - Grafenberg" 
                   className="w-full h-auto rounded-xl object-cover"
                 />
