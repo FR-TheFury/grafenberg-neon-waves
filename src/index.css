@@ -16,6 +16,13 @@
     --sand: 19 73% 20%;
     --deep: 237 34% 7%;
     
+    /* Gold Orange Theme (Lunar) */
+    --gold: 43 96% 56%;
+    --gold-dark: 30 100% 34%;
+    --gold-light: 48 100% 67%;
+    --amber: 45 93% 58%;
+    --bronze: 22 69% 31%;
+    
     /* Background & Surface */
     --background: 237 34% 7%;
     --surface: 237 34% 12%;
@@ -349,6 +356,33 @@
     cursor: pointer;
     border: none;
     box-shadow: 0 0 8px hsl(var(--neon-cyan) / 0.5);
+  }
+  
+  /* Gold slider styles for audio player */
+  .gold-slider {
+    background: linear-gradient(to right, hsl(var(--gold)) 0%, hsl(var(--amber)) 100%);
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .gold-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: hsl(var(--gold));
+    cursor: pointer;
+    box-shadow: 0 0 8px hsl(var(--gold) / 0.5);
+  }
+  
+  .gold-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: hsl(var(--gold));
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 8px hsl(var(--gold) / 0.5);
   }
 }
 

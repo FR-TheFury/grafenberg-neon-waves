@@ -21,35 +21,77 @@ const AudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout>();
 
-  // Album tracks with Spotify preview URLs (these are publicly available 30-second previews)
+  // Album tracks - ready for local files (just replace the file paths)
   const albumTracks: Track[] = [
     {
       id: '1',
       name: 'No Saints, No Proof',
-      preview_url: 'https://p.scdn.co/mp3-preview/9a9b5e5a5b9d4c8f7e6d5c4b3a2918171615141312?cid=null',
+      preview_url: '/audio/01-no-saints-no-proof.mp3', // Local file path
       duration_ms: 210000,
       track_number: 1
     },
     {
       id: '2', 
       name: 'Digital Dreams',
-      preview_url: 'https://p.scdn.co/mp3-preview/8b8a5e5a5b9d4c8f7e6d5c4b3a2918171615141312?cid=null',
+      preview_url: '/audio/02-digital-dreams.mp3', // Local file path
       duration_ms: 195000,
       track_number: 2
     },
     {
       id: '3',
       name: 'Neon Nights',
-      preview_url: 'https://p.scdn.co/mp3-preview/7c7a5e5a5b9d4c8f7e6d5c4b3a2918171615141312?cid=null',
+      preview_url: '/audio/03-neon-nights.mp3', // Local file path
       duration_ms: 230000,
       track_number: 3
     },
     {
       id: '4',
       name: 'Cyber Soul',
-      preview_url: 'https://p.scdn.co/mp3-preview/6d6a5e5a5b9d4c8f7e6d5c4b3a2918171615141312?cid=null',
+      preview_url: '/audio/04-cyber-soul.mp3', // Local file path
       duration_ms: 180000,
       track_number: 4
+    },
+    {
+      id: '5',
+      name: 'Electric Pulse',
+      preview_url: '/audio/05-electric-pulse.mp3', // Local file path
+      duration_ms: 245000,
+      track_number: 5
+    },
+    {
+      id: '6',
+      name: 'Synthetic Love',
+      preview_url: '/audio/06-synthetic-love.mp3', // Local file path
+      duration_ms: 201000,
+      track_number: 6
+    },
+    {
+      id: '7',
+      name: 'Chrome Hearts',
+      preview_url: '/audio/07-chrome-hearts.mp3', // Local file path
+      duration_ms: 188000,
+      track_number: 7
+    },
+    {
+      id: '8',
+      name: 'Midnight Drive',
+      preview_url: '/audio/08-midnight-drive.mp3', // Local file path
+      duration_ms: 267000,
+      track_number: 8
+    },
+    {
+      id: '9',
+      name: 'Quantum Dreams',
+      preview_url: '/audio/09-quantum-dreams.mp3', // Local file path
+      duration_ms: 223000,
+      track_number: 9
+    },
+    {
+      id: '10',
+      name: 'Future Memories',
+      preview_url: '/audio/10-future-memories.mp3', // Local file path
+      duration_ms: 278000,
+      track_number: 10
     }
   ];
 
@@ -147,7 +189,7 @@ const AudioPlayer = () => {
         {/* Expand/Collapse Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full glass-animated-border rounded-l-xl p-3 text-white hover:bg-white/10 transition-all duration-300 ${
+          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-l-xl p-3 text-gold hover:bg-gold/10 hover:border-gold/50 transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--gold)/0.4)] ${
             isExpanded ? '' : 'rounded-r-xl'
           }`}
         >
@@ -155,31 +197,31 @@ const AudioPlayer = () => {
         </button>
 
         {/* Player */}
-        <div className="glass-animated-border rounded-2xl p-6 w-80 backdrop-blur-xl">
+        <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-6 w-80 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
           {/* Track Info */}
           <div className="mb-4">
-            <h3 className="font-orbitron font-bold text-lg text-gradient-neon mb-1">
+            <h3 className="font-orbitron font-bold text-lg bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-1">
               GRAFENBERG
             </h3>
-            <p className="text-white font-medium truncate">
+            <p className="text-gold font-medium truncate">
               {tracks[currentTrack]?.name || 'No Saints, No Proof'}
             </p>
-            <p className="text-white/60 text-sm">
+            <p className="text-gold/60 text-sm">
               Track {currentTrack + 1} of {tracks.length}
             </p>
           </div>
 
           {/* Progress Bar */}
           <div className="mb-4">
-            <div className="flex items-center gap-2 text-xs text-white/60 mb-2">
+            <div className="flex items-center gap-2 text-xs text-gold/60 mb-2">
               <span>0:00</span>
-              <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+              <div className="flex-1 h-1 bg-bronze/40 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-neon-cyan to-neon-orange transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-gold to-amber transition-all duration-300 shadow-[0_0_8px_hsl(var(--gold)/0.5)]"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <span>0:30</span>
+              <span>{formatTime(tracks[currentTrack]?.duration_ms / 1000 || 210)}</span>
             </div>
           </div>
 
@@ -189,7 +231,7 @@ const AudioPlayer = () => {
               variant="ghost"
               size="sm"
               onClick={prevTrack}
-              className="text-white hover:text-neon-cyan"
+              className="text-gold hover:text-amber hover:bg-gold/10"
             >
               <SkipBack className="w-5 h-5" />
             </Button>
@@ -198,16 +240,16 @@ const AudioPlayer = () => {
               variant="default"
               size="lg"
               onClick={togglePlay}
-              className="rounded-full w-12 h-12"
+              className="rounded-full w-12 h-12 bg-gradient-to-r from-gold to-amber hover:from-gold-light hover:to-gold border border-gold/30 shadow-[0_0_20px_hsl(var(--gold)/0.4)] hover:shadow-[0_0_30px_hsl(var(--gold)/0.6)]"
             >
-              {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+              {isPlaying ? <Pause className="w-6 h-6 text-bronze" /> : <Play className="w-6 h-6 text-bronze" />}
             </Button>
             
             <Button
               variant="ghost"
               size="sm"
               onClick={nextTrack}
-              className="text-white hover:text-neon-cyan"
+              className="text-gold hover:text-amber hover:bg-gold/10"
             >
               <SkipForward className="w-5 h-5" />
             </Button>
@@ -215,7 +257,7 @@ const AudioPlayer = () => {
 
           {/* Volume */}
           <div className="flex items-center gap-3">
-            <Volume2 className="w-4 h-4 text-white/60" />
+            <Volume2 className="w-4 h-4 text-gold/60" />
             <input
               type="range"
               min="0"
@@ -223,7 +265,7 @@ const AudioPlayer = () => {
               step="0.1"
               value={volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
-              className="flex-1 h-1 bg-white/20 rounded-full appearance-none slider"
+              className="flex-1 h-1 bg-bronze/40 rounded-full appearance-none gold-slider"
             />
           </div>
 
@@ -239,21 +281,21 @@ const AudioPlayer = () => {
                 }}
                 className={`w-full text-left p-2 rounded-lg transition-all duration-300 mb-1 ${
                   index === currentTrack 
-                    ? 'bg-white/10 text-neon-cyan' 
-                    : 'text-white/80 hover:bg-white/5'
+                    ? 'bg-gold/20 text-gold border border-gold/30 shadow-[0_0_10px_hsl(var(--gold)/0.3)]' 
+                    : 'text-gold/80 hover:bg-gold/10 hover:border hover:border-gold/20'
                 }`}
               >
                 <div className="text-sm font-medium truncate">{track.name}</div>
-                <div className="text-xs text-white/40">
+                <div className="text-xs text-gold/40">
                   {formatTime(track.duration_ms / 1000)}
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/10">
-            <p className="text-xs text-white/40 text-center">
-              30-second previews • Full album on streaming platforms
+          <div className="mt-4 pt-3 border-t border-gold/20">
+            <p className="text-xs text-gold/40 text-center">
+              Full album tracks • Place MP3 files in /public/audio/
             </p>
           </div>
         </div>

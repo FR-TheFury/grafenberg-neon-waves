@@ -25,6 +25,14 @@ export default {
           magenta: "hsl(var(--neon-magenta))",
           violet: "hsl(var(--neon-violet))",
         },
+        // Gold orange palette
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          dark: "hsl(var(--gold-dark))",
+          light: "hsl(var(--gold-light))",
+        },
+        amber: "hsl(var(--amber))",
+        bronze: "hsl(var(--bronze))",
         sand: "hsl(var(--sand))",
         deep: "hsl(var(--deep))",
         surface: "hsl(var(--surface))",
