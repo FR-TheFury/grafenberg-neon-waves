@@ -35,7 +35,7 @@ const Contact = () => {
     },
     {
       name: 'Amazon Music',
-      url: 'https://music.amazon.com',
+      url: 'https://music.amazon.fr/albums/B0FQ6RLCMV',
       logo: amazonLogo,
       color: 'hover-glow-cyan'
     }
