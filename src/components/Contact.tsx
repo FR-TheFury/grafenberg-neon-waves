@@ -71,17 +71,18 @@ const Contact = () => {
                   asChild
                   variant="streaming"
                   size="lg"
-                  className={`group transition-all duration-300 ${platform.color} justify-between`}
+                  className={`group transition-all duration-300 ${platform.color} justify-between min-h-16`}
                 >
                   <a
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="flex items-center justify-between w-full px-4"
                   >
                     <img 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="h-8 xs:h-10 md:h-12 w-auto group-hover:scale-110 transition-transform duration-300"
+                      className="h-8 xs:h-10 md:h-12 w-8 xs:w-10 md:w-12 object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                     <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                   </a>
