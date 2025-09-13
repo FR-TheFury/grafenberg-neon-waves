@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import logo from '@/assets/Grafenberg.png';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () => {
             className="hover:scale-105 transition-transform duration-300"
           >
             <img 
-              src="src/assets/Grafenberg.png" // Replace this path with your PNG file path
+              src={logo} // Replace this path with your PNG file path
               alt="GRAFENBERG Logo"
               className="h-8 w-auto"
             />
