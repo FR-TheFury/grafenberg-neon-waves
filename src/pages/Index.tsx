@@ -9,8 +9,10 @@ import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
 import AudioPlayer from '@/components/AudioPlayer';
 import CursorTrail from '@/components/CursorTrail';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioPlayerRef = useRef<{ 
@@ -61,6 +63,15 @@ const Index = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  // Show loading screen
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-deep overflow-x-hidden">
