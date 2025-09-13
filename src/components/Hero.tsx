@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Play } from 'lucide-react';
 import LazyImage from '@/components/LazyImage';
-import backgroundAsset from '@/assets/Background.png';
+import backgroundAsset from '@/assets/Background.jpg';
 import spotifyLogo from '@/assets/Spotify.png';
 import appleLogo from '@/assets/Apple.png';
 import deezerLogo from '@/assets/Deezer.png';

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Play, Pause, Volume2 } from 'lucide-react';
-import albumArtwork from '@/assets/Album_artwork.png';
+import albumArtwork from '@/assets/Album_artwork.jpg';
 import imgNazar from '@/assets/Nazar Engine.jpg';
 import imgPomegranate from '@/assets/Pomegranate Static.jpg';
 import imgOrder from '@/assets/Order eats the sun.jpg';

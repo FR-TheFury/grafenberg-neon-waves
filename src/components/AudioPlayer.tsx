@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack, Volume2, ChevronLeft, ChevronRight } from 'lucide-react';
-import albumArtwork from '@/assets/Album_artwork.png';
+import albumArtwork from '@/assets/Album_artwork.jpg';
 import LazyImage from '@/components/LazyImage';
 interface Track {
   id: string;
