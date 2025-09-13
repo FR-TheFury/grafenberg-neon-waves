@@ -135,17 +135,19 @@ const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <button
-          onClick={scrollToHighlights}
-          className="animate-float text-neon-cyan hover:text-neon-orange transition-colors duration-300 hidden sm:block"
-          style={{ animationDelay: '0.8s' }}
-        >
-          <div className="flex flex-col items-center space-y-2">
-            <span className="text-sm font-medium">Discover More</span>
-            <ChevronDown className="h-5 w-5 xs:h-6 xs:w-6" />
-            <ChevronDown className="h-5 w-5 xs:h-6 xs:w-6 -mt-2 xs:-mt-3 opacity-60" />
-          </div>
-        </button>
+        <div className="w-full flex justify-center">
+          <button
+            onClick={scrollToHighlights}
+            className="animate-float text-neon-cyan hover:text-neon-orange transition-colors duration-300 hidden sm:block"
+            style={{ animationDelay: '0.8s' }}
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <span className="text-sm font-medium">Discover More</span>
+              <ChevronDown className="h-5 w-5 xs:h-6 xs:w-6" />
+              <ChevronDown className="h-5 w-5 xs:h-6 xs:w-6 -mt-2 xs:-mt-3 opacity-60" />
+            </div>
+          </button>
+        </div>
       </div>
     </section>
   );
