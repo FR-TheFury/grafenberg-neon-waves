@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack, Volume2, ChevronLeft, ChevronRight } from 'lucide-react';
 import albumArtwork from '@/assets/Album_artwork.png';
-
+import LazyImage from '@/components/LazyImage';
 interface Track {
   id: string;
   name: string;
@@ -25,8 +25,14 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.7);
   const [tracks, setTracks] = useState<Track[]>([]);
+  const [isBuffering, setIsBuffering] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout>();
+  const retryRef = useRef(0);
+  const connectionType = (navigator as any)?.connection?.effectiveType as string | undefined;
+  const isMobileOrTablet = typeof window !== 'undefined' ? window.matchMedia('(max-width: 1023px)').matches : false;
+  const isPoorConnection = ['slow-2g', '2g', '3g'].includes(connectionType || '');
 
   useImperativeHandle(ref, () => ({
     setCurrentTrack: (index: number) => {
@@ -164,8 +170,9 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
       setTracks(updatedTracks);
     };
     
-    preloadDurations();
-    
+    if (!isMobileOrTablet && !isPoorConnection) {
+      preloadDurations();
+    }
     // Auto-play on page load with improved reliability
     const startAutoPlay = () => {
       setIsPlaying(true);
@@ -192,7 +199,9 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
 
     // Try immediate autoplay first
     const timeoutId = setTimeout(() => {
-      startAutoPlay();
+      if (!isMobileOrTablet && !isPoorConnection) {
+        startAutoPlay();
+      }
     }, 500);
 
     // Fallback to user interaction
@@ -243,20 +252,43 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
 
     const handleError = () => {
       console.error('Audio error while loading/playing:', audio.src, audio.error);
+      setIsBuffering(false);
+      setLoadError('Erreur de lecture. Vérifiez votre connexion.');
+    };
+
+    const handleWaiting = () => setIsBuffering(true);
+    const handleStalled = () => setIsBuffering(true);
+    const handlePlayingEv = () => {
+      setIsBuffering(false);
+      setLoadError(null);
     };
 
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('error', handleError);
+    audio.addEventListener('waiting', handleWaiting);
+    audio.addEventListener('stalled', handleStalled);
+    audio.addEventListener('playing', handlePlayingEv);
 
     return () => {
       audio.removeEventListener('timeupdate', updateProgress);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('error', handleError);
+      audio.removeEventListener('waiting', handleWaiting);
+      audio.removeEventListener('stalled', handleStalled);
+      audio.removeEventListener('playing', handlePlayingEv);
     };
   }, [currentTrack]);
+
+  // Keep audio volume in sync
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume;
+    }
+  }, [volume]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -266,12 +298,20 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
       audio.pause();
       clearInterval(progressIntervalRef.current);
       console.log('Paused playback');
+      setIsBuffering(false);
     } else {
       const currentTrackData = tracks[currentTrack];
       if (currentTrackData?.preview_url) {
         audio.src = currentTrackData.preview_url;
         console.log('Play attempt with URL:', audio.src);
-        audio.play().catch((err) => {
+        setIsBuffering(true);
+        setLoadError(null);
+        audio.load();
+        audio.play().then(() => {
+          setIsBuffering(false);
+        }).catch((err) => {
+          setIsBuffering(false);
+          setLoadError('Impossible de démarrer la lecture.');
           console.warn('Play failed:', err);
         });
       }
@@ -290,7 +330,11 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
     const audio = audioRef.current;
     if (audio && tracks[newTrackIndex]?.preview_url) {
       audio.src = tracks[newTrackIndex].preview_url;
-      audio.play().catch((err) => {
+      setIsBuffering(true);
+      setLoadError(null);
+      audio.load();
+      audio.play().then(() => setIsBuffering(false)).catch((err) => {
+        setIsBuffering(false);
         console.warn('Auto-play next track failed:', err);
       });
     }
@@ -307,7 +351,11 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
     const audio = audioRef.current;
     if (audio && tracks[newTrackIndex]?.preview_url) {
       audio.src = tracks[newTrackIndex].preview_url;
+      setIsBuffering(true);
+      setLoadError(null);
+      audio.load();
       audio.play().catch((err) => {
+        setIsBuffering(false);
         console.warn('Auto-play previous track failed:', err);
       });
     }
@@ -323,7 +371,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
 
   return (
     <>
-      <audio ref={audioRef} />
+      <audio ref={audioRef} preload="none" playsInline />
       
       {/* Desktop Player - Right Side */}
       <div className={`hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-50 transition-all duration-500 ${
@@ -345,13 +393,11 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
           {/* Album Art & Track Info */}
           <div className="mb-4 flex gap-4">
             {/* Album Artwork */}
-            <div className="w-16 h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0">
-              <img 
-                src={albumArtwork} 
-                alt="No Saints, No Proof Album Cover" 
-                className="w-full h-full object-cover"
+              <LazyImage
+                src={albumArtwork}
+                alt="No Saints, No Proof Album Cover"
+                className="w-16 h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0"
               />
-            </div>
             
             {/* Track Info */}
             <div className="flex-1 min-w-0">
@@ -380,6 +426,13 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
               <span>{formatTime(tracks[currentTrack]?.duration_ms / 1000 || 0)}</span>
             </div>
           </div>
+
+          {/* Status */}
+          {(isBuffering || loadError) && (
+            <p className="text-gold/60 text-xs mb-2">
+              {isBuffering ? 'Chargement en cours…' : loadError}
+            </p>
+          )}
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4 mb-4">
@@ -440,7 +493,11 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
                   const audio = audioRef.current;
                   if (audio && track.preview_url) {
                     audio.src = track.preview_url;
-                    audio.play().catch((err) => {
+                    setIsBuffering(true);
+                    setLoadError(null);
+                    audio.load();
+                    audio.play().then(() => setIsBuffering(false)).catch((err) => {
+                      setIsBuffering(false);
                       console.warn('Auto-play selected track failed:', err);
                     });
                   }
@@ -489,13 +546,11 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
             {/* Album Art & Track Info */}
             <div className="mb-4 flex gap-3 xs:gap-4">
               {/* Album Artwork */}
-              <div className="w-12 h-12 xs:w-16 xs:h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0">
-                <img 
-                  src={albumArtwork} 
-                  alt="No Saints, No Proof Album Cover" 
-                  className="w-full h-full object-cover"
+                <LazyImage
+                  src={albumArtwork}
+                  alt="No Saints, No Proof Album Cover"
+                  className="w-12 h-12 xs:w-16 xs:h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0"
                 />
-              </div>
               
               {/* Track Info */}
               <div className="flex-1 min-w-0">
@@ -510,6 +565,13 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
                 </p>
               </div>
             </div>
+
+            {/* Status */}
+            {(isBuffering || loadError) && (
+              <p className="text-gold/60 text-xs mb-2">
+                {isBuffering ? 'Chargement en cours…' : loadError}
+              </p>
+            )}
 
             {/* Controls Only (No Progress Bar on Mobile) */}
             <div className="flex items-center justify-center gap-3 xs:gap-4 mb-4">
@@ -553,13 +615,17 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
                     setCurrentTime(0);
                     
                     // Auto-play selected track
-                    const audio = audioRef.current;
-                    if (audio && track.preview_url) {
-                      audio.src = track.preview_url;
-                      audio.play().catch((err) => {
-                        console.warn('Auto-play selected track failed:', err);
-                      });
-                    }
+                     const audio = audioRef.current;
+                     if (audio && track.preview_url) {
+                       audio.src = track.preview_url;
+                       setIsBuffering(true);
+                       setLoadError(null);
+                       audio.load();
+                       audio.play().then(() => setIsBuffering(false)).catch((err) => {
+                         setIsBuffering(false);
+                         console.warn('Auto-play selected track failed:', err);
+                       });
+                     }
                   }}
                   className={`w-full text-left p-2 rounded-lg transition-all duration-300 mb-1 ${
                     index === currentTrack 
