@@ -55,7 +55,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/01 - Nazar Engine.mp3`,
       duration_ms: 240000, // Placeholder duration
       track_number: 1,
-      image: `${base}images/track-01.jpg`, // To be replaced with actual image
+      image: `${base}src/assets/Nazar Engine.png`, // To be replaced with actual image
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
