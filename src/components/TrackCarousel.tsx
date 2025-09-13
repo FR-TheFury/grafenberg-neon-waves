@@ -4,16 +4,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Play, Pause, Volume2 } from 'lucide-react';
 import albumArtwork from '@/assets/Album_artwork.png';
-import imgNazar from '@/assets/Nazar Engine.png';
-import imgPomegranate from '@/assets/Pomegranate Static.png';
-import imgOrder from '@/assets/Order eats the sun.png';
-import imgTape from '@/assets/Tape Ghost Mirage.png';
-import imgBlack from '@/assets/Black Salt.png';
-import imgChrome from '@/assets/Chrome Killim.png';
-import imgLoom from '@/assets/Loom of Wires.png';
-import imgVhs from '@/assets/VHS DESERT PRAYER.png';
-import imgMotor from '@/assets/Motor Moon Communion.png';
-import imgSeraph from '@/assets/Seraph on the Faultline.png';
+import imgNazar from '@/assets/Nazar Engine.jpg';
+import imgPomegranate from '@/assets/Pomegranate Static.jpg';
+import imgOrder from '@/assets/Order eats the sun.jpg';
+import imgTape from '@/assets/Tape Ghost Mirage.jpg';
+import imgBlack from '@/assets/Black Salt.jpg';
+import imgChrome from '@/assets/Chrome Killim.jpg';
+import imgLoom from '@/assets/Loom of Wires.jpg';
+import imgVhs from '@/assets/VHS DESERT PRAYER.jpg';
+import imgMotor from '@/assets/Motor Moon Communion.jpg';
+import imgSeraph from '@/assets/Seraph on the Faultline.jpg';
 
 interface Track {
   id: string;
