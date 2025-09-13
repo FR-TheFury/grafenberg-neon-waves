@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/grafenberg-neon-waves/", // Will be updated to match your repository name after GitHub connection
+  base: "/", // Custom domain: www.grafenberg.ovh
   server: {
     host: "::",
     port: 8080,
