@@ -43,10 +43,10 @@ const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
       <div className="absolute inset-0 scanlines opacity-20" />
       
       {/* Loading Content */}
-      <div className="relative z-10 text-center px-4 xs:px-6 max-w-md mx-auto">
+      <div className="relative z-10 text-center px-4 xs:px-6 w-full max-w-2xl mx-auto">
         {/* Logo/Brand */}
         <div className="mb-8">
-          <h1 className="font-orbitron font-black text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-gradient-neon mb-2 leading-tight">
+          <h1 className="font-orbitron font-black text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gradient-neon mb-2 leading-tight break-words">
             GRAFENBERG
           </h1>
           <div className="waveform max-w-xs mx-auto opacity-80" />
