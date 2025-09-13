@@ -65,20 +65,6 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* CTA Button */}
-          <Button
-            asChild
-            variant="secondary"
-            size="sm"
-          >
-            <a
-              href="https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Listen Now
-            </a>
-          </Button>
         </div>
       </nav>
     </>

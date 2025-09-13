@@ -1,32 +1,43 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Music, Headphones, Radio, Disc3 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import spotifyLogo from '@/assets/Spotify.png';
+import appleLogo from '@/assets/Apple.png';
+import deezerLogo from '@/assets/Deezer.png';
+import bandcampLogo from '@/assets/bandcamp.png';
+import amazonLogo from '@/assets/Amazon music.png';
 
 const Contact = () => {
   const streamingPlatforms = [
     {
       name: 'Spotify',
       url: 'https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ',
-      icon: Music,
+      logo: spotifyLogo,
       color: 'hover-glow-cyan'
     },
     {
       name: 'Apple Music',
       url: 'https://music.apple.com/fr/album/no-saints-no-proof/1838489546',
-      icon: Headphones,
+      logo: appleLogo,
       color: 'hover-glow-orange'
     },
     {
       name: 'Deezer',
       url: 'https://www.deezer.com/en/album/818044871',
-      icon: Radio,
+      logo: deezerLogo,
       color: 'hover-glow-magenta'
     },
     {
       name: 'Bandcamp',
       url: 'https://grafenbergnoir.bandcamp.com/album/no-saints-no-proof',
-      icon: Disc3,
+      logo: bandcampLogo,
       color: 'hover-glow-violet'
+    },
+    {
+      name: 'Amazon Music',
+      url: 'https://music.amazon.com',
+      logo: amazonLogo,
+      color: 'hover-glow-cyan'
     }
   ];
 
@@ -54,22 +65,24 @@ const Contact = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             {streamingPlatforms.map((platform) => {
-              const IconComponent = platform.icon;
               return (
                 <Button
                   key={platform.name}
                   asChild
                   variant="streaming"
                   size="lg"
-                  className={`group transition-all duration-300 ${platform.color}`}
+                  className={`group transition-all duration-300 ${platform.color} justify-between`}
                 >
                   <a
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <IconComponent className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                    <span className="font-medium">{platform.name}</span>
+                    <img 
+                      src={platform.logo} 
+                      alt={platform.name}
+                      className="h-8 w-auto group-hover:scale-110 transition-transform duration-300"
+                    />
                     <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                   </a>
                 </Button>

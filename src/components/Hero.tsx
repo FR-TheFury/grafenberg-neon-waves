@@ -1,37 +1,42 @@
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Play, Music, Headphones } from 'lucide-react';
+import { ChevronDown, Play } from 'lucide-react';
 import backgroundAsset from '@/assets/Background.png';
+import spotifyLogo from '@/assets/Spotify.png';
+import appleLogo from '@/assets/Apple.png';
+import deezerLogo from '@/assets/Deezer.png';
+import bandcampLogo from '@/assets/bandcamp.png';
+import amazonLogo from '@/assets/Amazon music.png';
 
 const Hero = () => {
   const streamingPlatforms = [
     {
       name: 'Apple Music',
       url: 'https://music.apple.com/fr/album/no-saints-no-proof/1838489546',
-      icon: Music,
+      logo: appleLogo,
       color: 'hover-glow-cyan',
     },
     {
       name: 'Spotify',
       url: 'https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ',
-      icon: Play,
+      logo: spotifyLogo,
       color: 'hover-glow-orange',
     },
     {
       name: 'Deezer',
       url: 'https://www.deezer.com/en/album/818044871',
-      icon: Headphones,
+      logo: deezerLogo,
       color: 'hover-glow-magenta',
     },
     {
       name: 'Bandcamp',
       url: 'https://grafenbergnoir.bandcamp.com/album/no-saints-no-proof',
-      icon: Music,
+      logo: bandcampLogo,
       color: 'hover-glow-violet',
     },
     {
-      name: 'Qobuz',
-      url: 'https://www.qobuz.com/fr-fr/album/no-saints-no-proof-grafenberg/tlegfmeco7l5b',
-      icon: Headphones,
+      name: 'Amazon Music',
+      url: 'https://music.amazon.com',
+      logo: amazonLogo,
       color: 'hover-glow-cyan',
     },
   ];
@@ -102,22 +107,24 @@ const Hero = () => {
           <p className="text-muted-foreground mb-6 text-lg">Available on all platforms</p>
           <div className="flex flex-wrap justify-center gap-4">
             {streamingPlatforms.map((platform) => {
-              const Icon = platform.icon;
               return (
                 <Button
                   key={platform.name}
                   asChild
                   variant="outline"
-                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color}`}
+                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} p-3`}
                 >
                   <a
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-2"
+                    className="flex items-center"
                   >
-                    <Icon className="h-4 w-4" />
-                    <span>{platform.name}</span>
+                    <img 
+                      src={platform.logo} 
+                      alt={platform.name}
+                      className="h-6 w-auto"
+                    />
                   </a>
                 </Button>
               );
