@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, Volume2 } from 'lucide-react';
 import albumArtwork from '@/assets/Album_artwork.png';
 
 interface Track {
@@ -11,6 +11,7 @@ interface Track {
   preview_url: string;
   duration_ms: number;
   track_number: number;
+  image: string;
   description?: string;
   lyrics?: string;
 }
@@ -30,6 +31,10 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
 }) => {
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalPlaying, setModalPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Album tracks data
   const base = import.meta.env.BASE_URL || '/';
@@ -40,8 +45,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/01 - Nazar Engine.mp3`,
       duration_ms: 240000, // Placeholder duration
       track_number: 1,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-01.jpg`, // To be replaced with actual image
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '2', 
@@ -49,8 +55,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/02 - Pomegranate Static.mp3`,
       duration_ms: 220000,
       track_number: 2,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-02.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '3',
@@ -58,8 +65,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/03 - Order Eats The Sun.mp3`,
       duration_ms: 260000,
       track_number: 3,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-03.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '4',
@@ -67,8 +75,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/04 - Tape Ghost Mirage.mp3`,
       duration_ms: 230000,
       track_number: 4,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-04.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '5',
@@ -76,8 +85,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/05 - Black Salt.mp3`,
       duration_ms: 250000,
       track_number: 5,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-05.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '6',
@@ -85,8 +95,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/06 - Chrome killim.mp3`,
       duration_ms: 270000,
       track_number: 6,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-06.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '7',
@@ -94,8 +105,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/07 -  Loom of Wires.mp3`,
       duration_ms: 240000,
       track_number: 7,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-07.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '8',
@@ -103,8 +115,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/08 - VHS Desert Prayer.mp3`,
       duration_ms: 280000,
       track_number: 8,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-08.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '9',
@@ -112,8 +125,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/09 - Motor Moon Communion.mp3`,
       duration_ms: 290000,
       track_number: 9,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-09.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     },
     {
       id: '10',
@@ -121,8 +135,9 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/10 - Seraph on the Faultline.mp3`,
       duration_ms: 310000,
       track_number: 10,
-      description: 'Description à remplir...',
-      lyrics: 'Lyrics à remplir...'
+      image: `${base}images/track-10.jpg`,
+      description: 'Track description to be filled...',
+      lyrics: 'Track lyrics to be filled...'
     }
   ];
 
@@ -136,6 +151,50 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
   const handleTrackClick = (track: Track) => {
     setSelectedTrack(track);
     setModalOpen(true);
+    setModalPlaying(false);
+    setCurrentTime(0);
+    // Pause main audio player
+    onPause?.();
+  };
+
+  const handleModalPlay = () => {
+    if (audioRef.current) {
+      if (modalPlaying) {
+        audioRef.current.pause();
+        setModalPlaying(false);
+      } else {
+        // Pause main audio player
+        onPause?.();
+        audioRef.current.play();
+        setModalPlaying(true);
+      }
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(e.target.value);
+    setCurrentTime(newTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    }
+  };
+
+  const formatTimeDisplay = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const handlePlayTrack = (trackIndex: number) => {
@@ -158,7 +217,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
               TRACKLIST
             </h2>
             <p className="text-gold/80 text-lg max-w-2xl mx-auto">
-              Découvrez les 10 titres de "No Saints, No Proof"
+              Discover the 10 tracks from "No Saints, No Proof"
             </p>
           </div>
 
@@ -182,32 +241,14 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
                         {/* Track Image */}
                         <div className="aspect-square relative overflow-hidden">
                           <img 
-                            src={albumArtwork} 
+                            src={track.image} 
                             alt={`${track.name} artwork`}
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                            onError={(e) => {
+                              // Fallback to album artwork if individual track image fails
+                              (e.target as HTMLImageElement).src = albumArtwork;
+                            }}
                           />
-                          
-                          {/* Play button overlay */}
-                          <div className="absolute inset-0 bg-bronze/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <Button
-                              variant="default"
-                              size="lg"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (isCurrentTrackPlaying(index)) {
-                                  onPause?.();
-                                } else {
-                                  handlePlayTrack(index);
-                                }
-                              }}
-                              className="rounded-full w-16 h-16 bg-gradient-to-r from-gold to-amber hover:from-gold-light hover:to-gold border border-gold/30 shadow-[0_0_20px_hsl(var(--gold)/0.4)] hover:shadow-[0_0_30px_hsl(var(--gold)/0.6)]"
-                            >
-                              {isCurrentTrackPlaying(index) ? 
-                                <Pause className="w-8 h-8 text-bronze" /> : 
-                                <Play className="w-8 h-8 text-bronze" />
-                              }
-                            </Button>
-                          </div>
 
                           {/* Track number */}
                           <div className="absolute top-3 left-3 bg-bronze/80 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center">
@@ -248,45 +289,67 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
               </DialogHeader>
               
               <div className="grid md:grid-cols-2 gap-8 mt-6">
-                {/* Image and controls */}
+                {/* Image */}
                 <div className="space-y-6">
                   <div className="relative aspect-square rounded-xl overflow-hidden border-2 border-gold/30">
                     <img 
-                      src={albumArtwork} 
+                      src={selectedTrack.image} 
                       alt={`${selectedTrack.name} artwork`}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = albumArtwork;
+                      }}
                     />
                   </div>
-                  
-                  <div className="text-center space-y-4">
-                    <div className="flex items-center justify-center gap-4">
+                </div>
+
+                {/* Audio Player and Content */}
+                <div className="space-y-6">
+                  {/* Audio Player */}
+                  <div className="bg-bronze/10 rounded-lg p-6 border border-gold/20">
+                    <audio 
+                      ref={audioRef}
+                      src={selectedTrack.preview_url}
+                      onTimeUpdate={handleTimeUpdate}
+                      onLoadedMetadata={handleLoadedMetadata}
+                      onEnded={() => setModalPlaying(false)}
+                    />
+                    
+                    {/* Play Button */}
+                    <div className="flex items-center justify-center mb-4">
                       <Button
                         variant="default"
                         size="lg"
-                        onClick={() => {
-                          const trackIndex = tracks.findIndex(t => t.id === selectedTrack.id);
-                          if (isCurrentTrackPlaying(trackIndex)) {
-                            onPause?.();
-                          } else {
-                            handlePlayTrack(trackIndex);
-                          }
-                        }}
+                        onClick={handleModalPlay}
                         className="rounded-full w-16 h-16 bg-gradient-to-r from-gold to-amber hover:from-gold-light hover:to-gold border border-gold/30 shadow-[0_0_20px_hsl(var(--gold)/0.4)] hover:shadow-[0_0_30px_hsl(var(--gold)/0.6)]"
                       >
-                        {isCurrentTrackPlaying(tracks.findIndex(t => t.id === selectedTrack.id)) ? 
+                        {modalPlaying ? 
                           <Pause className="w-8 h-8 text-bronze" /> : 
                           <Play className="w-8 h-8 text-bronze" />
                         }
                       </Button>
                     </div>
-                    <p className="text-gold/80 text-lg font-medium">
-                      Durée: {formatTime(selectedTrack.duration_ms)}
-                    </p>
-                  </div>
-                </div>
 
-                {/* Description and lyrics */}
-                <div className="space-y-6">
+                    {/* Progress Bar */}
+                    <div className="space-y-2">
+                      <input
+                        type="range"
+                        min="0"
+                        max={duration || 0}
+                        value={currentTime}
+                        onChange={handleSeek}
+                        className="w-full h-2 bg-bronze/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gold [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-gold [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-none"
+                      />
+                      
+                      {/* Time Display */}
+                      <div className="flex justify-between text-gold/80 text-sm">
+                        <span>{formatTimeDisplay(currentTime)}</span>
+                        <span>{formatTimeDisplay(duration)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Description */}
                   <div>
                     <h3 className="font-orbitron text-xl text-gold mb-3">Description</h3>
                     <p className="text-gold/80 leading-relaxed">
@@ -294,9 +357,10 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
                     </p>
                   </div>
                   
+                  {/* Lyrics */}
                   <div>
-                    <h3 className="font-orbitron text-xl text-gold mb-3">Paroles</h3>
-                    <div className="bg-bronze/10 rounded-lg p-4 border border-gold/20">
+                    <h3 className="font-orbitron text-xl text-gold mb-3">Lyrics</h3>
+                    <div className="bg-bronze/10 rounded-lg p-4 border border-gold/20 max-h-60 overflow-y-auto">
                       <pre className="text-gold/80 whitespace-pre-wrap font-mono text-sm leading-relaxed">
                         {selectedTrack.lyrics}
                       </pre>
