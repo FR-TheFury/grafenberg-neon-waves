@@ -7,6 +7,7 @@ import appleLogo from '@/assets/Apple.png';
 import deezerLogo from '@/assets/Deezer.png';
 import bandcampLogo from '@/assets/bandcamp.png';
 import amazonLogo from '@/assets/Amazon music.png';
+import qobuzLogo from '@/assets/Qobuz.png';
 
 const Hero = () => {
   const streamingPlatforms = [
@@ -39,6 +40,12 @@ const Hero = () => {
       url: 'https://music.amazon.fr/albums/B0FQ6RLCMV',
       logo: amazonLogo,
       color: 'hover-glow-cyan',
+    },
+    {
+      name: 'Qobuz',
+      url: 'https://www.qobuz.com/fr-fr/album/no-saints-no-proof-grafenberg/tlegfmeco7l5b',
+      logo: qobuzLogo,
+      color: 'hover-glow-orange',
     },
   ];
 
