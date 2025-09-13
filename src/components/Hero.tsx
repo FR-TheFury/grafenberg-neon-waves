@@ -123,7 +123,7 @@ const Hero = () => {
                     <img 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="h-6 w-auto"
+                      className="h-10 w-auto"
                     />
                   </a>
                 </Button>
