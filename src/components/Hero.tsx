@@ -96,7 +96,7 @@ const Hero = () => {
                   key={platform.name}
                   asChild
                   variant="outline"
-                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} p-2 xs:p-3 min-w-0`}
+                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} p-1 xs:p-2 md:p-3 min-w-0`}
                 >
                   <a
                     href={platform.url}
@@ -107,7 +107,7 @@ const Hero = () => {
                     <LazyImage 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="h-8 xs:h-10 md:h-12 w-auto"
+                      className="h-6 xs:h-8 md:h-10 lg:h-12 w-auto"
                     />
                   </a>
                 </Button>
