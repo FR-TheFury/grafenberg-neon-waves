@@ -67,7 +67,7 @@ const Index = () => {
       <CursorTrail />
       <ScrollProgress />
       <Navbar />
-      <AudioPlayer />
+      <AudioPlayer ref={audioPlayerRef} />
       <main>
         <Hero />
         <TrackCarousel 

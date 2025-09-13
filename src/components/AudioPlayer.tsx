@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, SkipForward, SkipBack, Volume2, ChevronLeft, ChevronRight } from 'lucide-react';
 import albumArtwork from '@/assets/Album_artwork.png';
@@ -11,7 +11,13 @@ interface Track {
   track_number: number;
 }
 
-const AudioPlayer = () => {
+export type AudioPlayerHandle = {
+  setCurrentTrack: (index: number) => void;
+  setIsPlaying: (playing: boolean) => void;
+  pause: () => void;
+};
+
+const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -20,6 +26,40 @@ const AudioPlayer = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout>();
+
+  useImperativeHandle(ref, () => ({
+    setCurrentTrack: (index: number) => {
+      setCurrentTrack(index);
+      setProgress(0);
+      const audio = audioRef.current;
+      if (audio && tracks[index]?.preview_url) {
+        audio.src = tracks[index].preview_url!;
+      }
+    },
+    setIsPlaying: (playing: boolean) => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (playing) {
+        const url = tracks[currentTrack]?.preview_url;
+        if (url) {
+          audio.src = url;
+          audio.play().catch((err) => {
+            console.warn('Play via ref failed:', err);
+          });
+        }
+      } else {
+        audio.pause();
+      }
+      setIsPlaying(playing);
+    },
+    pause: () => {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.pause();
+      }
+      setIsPlaying(false);
+    },
+  }));
 
   // Album tracks with real track names (respect base path for GitHub Pages)
   const base = import.meta.env.BASE_URL || '/';
@@ -389,6 +429,6 @@ const AudioPlayer = () => {
       </div>
     </>
   );
-};
+});
 
 export default AudioPlayer;
