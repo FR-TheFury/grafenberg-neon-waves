@@ -96,7 +96,7 @@ const Hero = () => {
                   key={platform.name}
                   asChild
                   variant="outline"
-                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} w-12 h-12 xs:w-14 xs:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 p-0 flex items-center justify-center`}
+                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} inline-flex items-center justify-center h-10 xs:h-12 md:h-14 lg:h-16 px-2 xs:px-3 md:px-4 min-w-[2.5rem] xs:min-w-[3rem] md:min-w-[3.5rem]`}
                 >
                   <a
                     href={platform.url}
@@ -104,10 +104,10 @@ const Hero = () => {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-full h-full"
                   >
-                    <LazyImage 
+                    <img 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="h-6 xs:h-8 md:h-10 lg:h-12 w-6 xs:w-8 md:w-10 lg:w-12 object-contain"
+                      className="block h-6 xs:h-8 md:h-10 lg:h-12 w-auto object-contain shrink-0"
                     />
                   </a>
                 </Button>

@@ -82,7 +82,7 @@ const Contact = () => {
                     <img 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="h-8 xs:h-10 md:h-12 w-8 xs:w-10 md:w-12 object-contain group-hover:scale-110 transition-transform duration-300"
+                      className="block h-8 xs:h-10 md:h-12 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
                     />
                     <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                   </a>
