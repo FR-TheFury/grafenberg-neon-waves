@@ -36,6 +36,16 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Pause modal audio when main player starts playing
+  useEffect(() => {
+    if (isPlaying && modalPlaying) {
+      setModalPlaying(false);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, modalPlaying]);
+
   // Album tracks data
   const base = import.meta.env.BASE_URL || '/';
   const tracks: Track[] = [
