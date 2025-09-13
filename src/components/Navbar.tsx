@@ -36,12 +36,16 @@ const Navbar = () => {
         scrolled ? 'glass py-4' : 'py-6'
       }`}>
         <div className="container mx-auto px-6 flex items-center justify-between">
-          {/* Brand */}
+          {/* Brand Logo */}
           <button
             onClick={() => scrollToSection('home')}
-            className="font-orbitron font-bold text-2xl text-gradient-neon hover:scale-105 transition-transform duration-300"
+            className="hover:scale-105 transition-transform duration-300"
           >
-            GRAFENBERG
+            <img 
+              src="/logo.png" // Replace this path with your PNG file path
+              alt="GRAFENBERG Logo"
+              className="h-8 w-auto"
+            />
           </button>
 
           {/* Navigation Links */}
