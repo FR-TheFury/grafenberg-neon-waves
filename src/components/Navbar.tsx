@@ -45,7 +45,7 @@ const Navbar = () => {
             <img 
               src={logo} // Replace this path with your PNG file path
               alt="GRAFENBERG Logo"
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </button>
 
