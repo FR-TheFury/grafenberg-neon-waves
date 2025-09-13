@@ -22,6 +22,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.7);
   const [tracks, setTracks] = useState<Track[]>([]);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -139,6 +140,32 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
   useEffect(() => {
     setTracks(albumTracks);
     
+    // Preload track durations
+    const preloadDurations = async () => {
+      const updatedTracks = [...albumTracks];
+      for (let i = 0; i < albumTracks.length; i++) {
+        const track = albumTracks[i];
+        if (track.preview_url) {
+          try {
+            const audio = new Audio(track.preview_url);
+            await new Promise((resolve, reject) => {
+              audio.addEventListener('loadedmetadata', () => {
+                updatedTracks[i] = { ...track, duration_ms: audio.duration * 1000 };
+                resolve(null);
+              });
+              audio.addEventListener('error', reject);
+              audio.load();
+            });
+          } catch (error) {
+            console.warn(`Failed to preload duration for track ${i + 1}:`, error);
+          }
+        }
+      }
+      setTracks(updatedTracks);
+    };
+    
+    preloadDurations();
+    
     // Auto-play on page load with improved reliability
     const startAutoPlay = () => {
       setIsPlaying(true);
@@ -193,6 +220,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
     const updateProgress = () => {
       if (audio.duration) {
         setProgress((audio.currentTime / audio.duration) * 100);
+        setCurrentTime(audio.currentTime);
       }
     };
 
@@ -255,6 +283,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
     const newTrackIndex = (currentTrack + 1) % tracks.length;
     setCurrentTrack(newTrackIndex);
     setProgress(0);
+    setCurrentTime(0);
     setIsPlaying(true);
     
     // Auto-play next track
@@ -271,6 +300,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
     const newTrackIndex = (currentTrack - 1 + tracks.length) % tracks.length;
     setCurrentTrack(newTrackIndex);
     setProgress(0);
+    setCurrentTime(0);
     setIsPlaying(true);
     
     // Auto-play previous track
@@ -338,7 +368,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
           {/* Progress Bar */}
           <div className="mb-4">
             <div className="flex items-center gap-2 text-xs text-gold/60 mb-2">
-              <span>0:00</span>
+              <span>{formatTime(currentTime)}</span>
               <div className="flex-1 h-1 bg-bronze/40 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-gold to-amber transition-all duration-300 shadow-[0_0_8px_hsl(var(--gold)/0.5)]"
@@ -402,6 +432,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
                   setCurrentTrack(index);
                   setIsPlaying(true);
                   setProgress(0);
+                  setCurrentTime(0);
                   
                   // Auto-play selected track
                   const audio = audioRef.current;
