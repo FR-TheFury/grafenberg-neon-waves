@@ -89,14 +89,14 @@ const Hero = () => {
         {/* Platform Badges */}
         <div className="mb-12 xs:mb-14 md:mb-16 animate-slide-up" style={{ animationDelay: '0.6s' }}>
           <p className="text-muted-foreground mb-4 xs:mb-6 text-base xs:text-lg">Available on all platforms</p>
-          <div className="grid grid-cols-3 gap-3 xs:gap-4 md:gap-6 max-w-xs xs:max-w-sm md:max-w-md mx-auto">
+          <div className="grid grid-cols-3 gap-2 xs:gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto">
             {streamingPlatforms.map((platform) => {
               return (
                 <Button
                   key={platform.name}
                   asChild
                   variant="outline"
-                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} inline-flex items-center justify-center h-8 xs:h-10 md:h-12 px-2 xs:px-3 min-w-[2rem] xs:min-w-[2.5rem] md:min-w-[3rem]`}
+                  className={`glass border-white/20 text-foreground hover:text-deep transition-all duration-300 ${platform.color} inline-flex items-center justify-center h-8 xs:h-9 sm:h-10 md:h-12 lg:h-14 xl:h-16 px-1 xs:px-2 sm:px-3 md:px-4 min-w-[2rem] xs:min-w-[2.25rem] sm:min-w-[2.5rem] md:min-w-[3rem] lg:min-w-[3.5rem] xl:min-w-[4rem]`}
                 >
                   <a
                     href={platform.url}
@@ -107,7 +107,7 @@ const Hero = () => {
                     <img 
                       src={platform.logo} 
                       alt={platform.name}
-                      className="block h-4 xs:h-6 md:h-8 w-auto object-contain shrink-0"
+                      className="block h-4 xs:h-5 sm:h-6 md:h-8 lg:h-10 xl:h-12 w-auto object-contain shrink-0"
                     />
                   </a>
                 </Button>
