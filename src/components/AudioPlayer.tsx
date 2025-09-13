@@ -324,7 +324,9 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
   return (
     <>
       <audio ref={audioRef} />
-      <div className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 transition-all duration-500 ${
+      
+      {/* Desktop Player - Right Side */}
+      <div className={`hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-50 transition-all duration-500 ${
         isExpanded ? 'translate-x-0' : 'translate-x-72'
       }`}>
         
@@ -338,7 +340,7 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
           {isExpanded ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
         </button>
 
-        {/* Player */}
+        {/* Desktop Player */}
         <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-6 w-80 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
           {/* Album Art & Track Info */}
           <div className="mb-4 flex gap-4">
@@ -457,6 +459,120 @@ const AudioPlayer = React.forwardRef<AudioPlayerHandle, {}>((props, ref) => {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Mobile/Tablet Player - Bottom Right */}
+      <div className="lg:hidden fixed bottom-6 right-4 xs:right-6 z-50">
+        {/* Mobile Floating Button */}
+        {!isExpanded && (
+          <button
+            onClick={() => setIsExpanded(true)}
+            className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-full p-3 xs:p-4 text-gold hover:bg-gold/10 hover:border-gold/50 transition-all duration-300 shadow-[0_0_20px_hsl(var(--gold)/0.4)] hover:shadow-[0_0_30px_hsl(var(--gold)/0.6)]"
+          >
+            {isPlaying ? <Pause className="w-5 h-5 xs:w-6 xs:h-6" /> : <Play className="w-5 h-5 xs:w-6 xs:h-6" />}
+          </button>
+        )}
+
+        {/* Mobile Expanded Player */}
+        {isExpanded && (
+          <div className="bg-bronze/20 backdrop-blur-xl border-2 border-gold/30 rounded-2xl p-4 xs:p-6 w-72 xs:w-80 shadow-[0_0_30px_hsl(var(--gold)/0.3)]">
+            {/* Close Button */}
+            <div className="flex justify-end mb-3">
+              <button
+                onClick={() => setIsExpanded(false)}
+                className="text-gold/60 hover:text-gold transition-colors duration-300"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Album Art & Track Info */}
+            <div className="mb-4 flex gap-3 xs:gap-4">
+              {/* Album Artwork */}
+              <div className="w-12 h-12 xs:w-16 xs:h-16 rounded-lg overflow-hidden border border-gold/30 flex-shrink-0">
+                <img 
+                  src={albumArtwork} 
+                  alt="No Saints, No Proof Album Cover" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Track Info */}
+              <div className="flex-1 min-w-0">
+                <h3 className="font-orbitron font-bold text-base xs:text-lg bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-1">
+                  GRAFENBERG
+                </h3>
+                <p className="text-gold font-medium text-sm xs:text-base truncate">
+                  {tracks[currentTrack]?.name || 'No Saints, No Proof'}
+                </p>
+                <p className="text-gold/60 text-xs xs:text-sm">
+                  Track {(currentTrack + 1).toString().padStart(2, '0')} of {tracks.length}
+                </p>
+              </div>
+            </div>
+
+            {/* Controls Only (No Progress Bar on Mobile) */}
+            <div className="flex items-center justify-center gap-3 xs:gap-4 mb-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={prevTrack}
+                className="text-gold hover:text-amber hover:bg-gold/10 p-2"
+              >
+                <SkipBack className="w-4 h-4 xs:w-5 xs:h-5" />
+              </Button>
+              
+              <Button
+                variant="default"
+                size="lg"
+                onClick={togglePlay}
+                className="rounded-full w-10 h-10 xs:w-12 xs:h-12 bg-gradient-to-r from-gold to-amber hover:from-gold-light hover:to-gold border border-gold/30 shadow-[0_0_20px_hsl(var(--gold)/0.4)] hover:shadow-[0_0_30px_hsl(var(--gold)/0.6)]"
+              >
+                {isPlaying ? <Pause className="w-5 h-5 xs:w-6 xs:h-6 text-bronze" /> : <Play className="w-5 h-5 xs:w-6 xs:h-6 text-bronze" />}
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={nextTrack}
+                className="text-gold hover:text-amber hover:bg-gold/10 p-2"
+              >
+                <SkipForward className="w-4 h-4 xs:w-5 xs:h-5" />
+              </Button>
+            </div>
+
+            {/* Track List - Shortened for Mobile */}
+            <div className="max-h-24 xs:max-h-32 overflow-y-auto">
+              {tracks.slice(0, 5).map((track, index) => (
+                <button
+                  key={track.id}
+                  onClick={() => {
+                    setCurrentTrack(index);
+                    setIsPlaying(true);
+                    setProgress(0);
+                    setCurrentTime(0);
+                    
+                    // Auto-play selected track
+                    const audio = audioRef.current;
+                    if (audio && track.preview_url) {
+                      audio.src = track.preview_url;
+                      audio.play().catch((err) => {
+                        console.warn('Auto-play selected track failed:', err);
+                      });
+                    }
+                  }}
+                  className={`w-full text-left p-2 rounded-lg transition-all duration-300 mb-1 ${
+                    index === currentTrack 
+                      ? 'bg-gold/20 text-gold border border-gold/30 shadow-[0_0_10px_hsl(var(--gold)/0.3)]' 
+                      : 'text-gold/80 hover:bg-gold/10 hover:border hover:border-gold/20'
+                  }`}
+                >
+                  <div className="text-xs xs:text-sm font-medium truncate">{track.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
