@@ -82,13 +82,16 @@ const Artist = () => {
               
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  After deejaying from pumping techno to minimal underground, I started to collect hundreds of ep's from beloved artists who has deeply influenced me since twenty years. It was than a natural and organic step to start producing my own music.
+                  Grafenberg is a sonic explorer whose path spans from the DJ booth to the edges of contemporary electronic production. After two decades of collecting and spinning techno, minimal and deep underground records, he transformed that passion into a personal language of textures and contrasts.
                 </p>
                 <p>
-                  My first Ep on Traumwelten is a testimonial of my love for their work, my love for deep techno music and cheesy moogy's things.
+                  His debut EP on Traumwelten was both a tribute to the artists who shaped him and a declaration of his own voice. Since then, Grafenberg has expanded his sound, weaving deep techno foundations with cinematic atmospheres, hypnotic grooves, and moog-driven nostalgia.
                 </p>
                 <p>
-                  I found with this label the ideal creative framework to share my world, my dreams & feelings !
+                  In 2025, Grafenberg released “No Saints, No Proof”, an album that pushes his music into new emotional and conceptual territory—blurring the line between the dancefloor and inner reflection. Looking ahead, his upcoming project “Erebion’s Dominion” promises to further expand this vision, unfolding as a narrative between cosmic darkness and redemptive light.
+                </p>
+                <p>
+                  Forever chasing innovation and raw emotion, Grafenberg bridges the legacy of techno with new horizons, where every note tells a fragment of dream or utopia.
                 </p>
               </div>
             </div>
