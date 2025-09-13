@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import Navbar from '@/components/Navbar';
+
 import Hero from '@/components/Hero';
 import TrackCarousel from '@/components/TrackCarousel';
 import AlbumHighlights from '@/components/AlbumHighlights';
@@ -77,7 +77,7 @@ const Index = () => {
     <div className="min-h-screen bg-deep overflow-x-hidden">
       <CursorTrail />
       <ScrollProgress />
-      <Navbar />
+      
       <AudioPlayer ref={audioPlayerRef} />
       <main>
         <Hero />

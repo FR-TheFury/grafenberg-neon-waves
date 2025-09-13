@@ -85,24 +85,6 @@ const Hero = () => {
           </p>
         </div>
 
-        {/* Main CTA */}
-        <div className="mb-8 xs:mb-10 md:mb-12 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <Button
-            asChild
-            variant="default"
-            size="lg"
-            className="text-base xs:text-lg md:text-xl px-6 xs:px-8 py-3 xs:py-4"
-          >
-            <a
-              href="https://open.spotify.com/intl-fr/album/1Rc7HhHY8dFrqlrQePv1TZ"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Play className="mr-2 xs:mr-3 h-5 w-5 xs:h-6 xs:w-6" />
-              Listen Here
-            </a>
-          </Button>
-        </div>
 
         {/* Platform Badges */}
         <div className="mb-12 xs:mb-14 md:mb-16 animate-slide-up" style={{ animationDelay: '0.6s' }}>
