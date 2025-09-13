@@ -65,7 +65,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/02 - Pomegranate Static.mp3`,
       duration_ms: 220000,
       track_number: 2,
-      image: `${base}images/track-02.jpg`,
+      image: `${base}src/assets/Pomegranate Static.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -75,7 +75,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/03 - Order Eats The Sun.mp3`,
       duration_ms: 260000,
       track_number: 3,
-      image: `${base}images/track-03.jpg`,
+      image: `${base}src/assets/Order eats the sun.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -85,7 +85,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/04 - Tape Ghost Mirage.mp3`,
       duration_ms: 230000,
       track_number: 4,
-      image: `${base}images/track-04.jpg`,
+      image: `${base}src/assets/Tape Ghost Mirage.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -95,7 +95,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/05 - Black Salt.mp3`,
       duration_ms: 250000,
       track_number: 5,
-      image: `${base}images/track-05.jpg`,
+      image: `${base}src/assets/Black Salt.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -105,7 +105,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/06 - Chrome killim.mp3`,
       duration_ms: 270000,
       track_number: 6,
-      image: `${base}images/track-06.jpg`,
+      image: `${base}src/assets/Chrome Killim.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -115,7 +115,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/07 -  Loom of Wires.mp3`,
       duration_ms: 240000,
       track_number: 7,
-      image: `${base}images/track-07.jpg`,
+      image: `${base}src/assets/Loom of Wires.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -125,7 +125,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/08 - VHS Desert Prayer.mp3`,
       duration_ms: 280000,
       track_number: 8,
-      image: `${base}images/track-08.jpg`,
+      image: `${base}src/assets/VHS DESERT PRAYER.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -135,7 +135,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/09 - Motor Moon Communion.mp3`,
       duration_ms: 290000,
       track_number: 9,
-      image: `${base}images/track-09.jpg`,
+      image: `${base}src/assets/Motor Moon Communion.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     },
@@ -145,7 +145,7 @@ const TrackCarousel: React.FC<TrackCarouselProps> = ({
       preview_url: `${base}audio/10 - Seraph on the Faultline.mp3`,
       duration_ms: 310000,
       track_number: 10,
-      image: `${base}images/track-10.jpg`,
+      image: `${base}src/assets/Seraph on the Faultline.png`,
       description: 'Track description to be filled...',
       lyrics: 'Track lyrics to be filled...'
     }
